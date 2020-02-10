@@ -1,0 +1,124 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	>
+
+<h:body>
+
+	<h:form id="formProductcs">
+	<p:growl id="growl" showDetail="false"/>
+		<p:tab>
+			<p:panelGrid columns="3">
+				<p:outputLabel value="Buscar Productos por id del CLiente"></p:outputLabel>
+				<p:inputText label="Ingrese el id del Cliente" value="#{customerLocalController.idCustomer}" ></p:inputText>
+				<p:commandButton action="#{customerLocalController.findProductByIdCliente()}" value="Buscar Productos" update="datalist" />
+			</p:panelGrid>
+		
+		</p:tab>
+				
+		
+<!-- 		<p:selectBooleanButton id="value2" value="#{customerLocalController.dolar}" onLabel="Yes" offLabel="No" onIcon="pi pi-check" offIcon="pi pi-times" style="width:60px" valueChangeListener="#{customerLocalController.cambio()}"> -->
+<!--             <p:ajax event="change" update="datalist" listener="#{customerLocalController.cambio()}" /> -->
+<!--         </p:selectBooleanButton> -->
+		
+		<p:tab>
+	
+	<p:dataTable		
+		id="datalist" 
+		value="#{customerLocalController.customerProducts.products}"		
+		var="item"	
+		rowKey="#{item.product_id}"                                   
+        rowsPerPageTemplate="5,10,15"
+        paginatorPosition="bottom"
+        rows="10"        
+        selectionMode="single"
+        selection="#{customerLocalController.selected}"
+        widgetVar="CargaProTable"
+        >
+        
+	        <p:column headerText="Id del Producto" style="width:30%">
+	            <h:outputText value="#{item.product_id}"  />
+	        </p:column>
+	 
+	        <p:column headerText="Nombre" style="width:30%">
+	            <h:outputText value="#{item.name}" />
+	        </p:column>
+	 
+	        <p:column headerText="Descripcion del producto" style="width:30%">
+	            <h:outputText value="#{item.product_description}" />
+	        </p:column>
+	        
+	        <p:column headerText="Precio" style="width:30%">
+	            <h:outputText value="#{item.price}" />
+	        </p:column>
+	        
+	        <p:column headerText="Agregar al carro">
+	        	<p:commandButton actionListener="#{customerLocalController.add()}" value="Agregar"></p:commandButton>
+	        </p:column>  
+	 
+    </p:dataTable>
+
+</p:tab>
+							
+	</h:form>
+	
+	<br/><br/><br/><hr></hr><br/><br/><br/><br/>
+	
+	<h:form>
+	
+		<p:tab>
+			<p:panelGrid columns="3">
+				<p:outputLabel value="Buscar Ordenes de Cliente"></p:outputLabel>
+				<p:inputText label="Ingrese el id del Cliente" value="#{customerLocalController.idCustomerOrder}" ></p:inputText>
+				<p:commandButton value="Burcar Ordenes" actionListener="#{customerLocalController.loadOrder()}" update="datalist2"></p:commandButton>
+			</p:panelGrid>
+						
+		
+		</p:tab>
+		
+		<p:dataTable		
+		id="datalist2" 
+		value="#{customerLocalController.lstOrder}"		
+		var="item"	
+		rowKey="#{item.order_id}"                                   
+        rowsPerPageTemplate="5,10,15"
+        paginatorPosition="bottom"
+        rows="10"        
+       
+        widgetVar="CargaTable"
+        >
+        
+	        <p:column headerText="Id Orden" style="width:30%">
+	            <h:outputText value="#{item.order_id}"  />
+	        </p:column>
+	 	        	        
+	        
+	        <p:column headerText="Detalles">
+	        	<p:subTable var="item2" value="#{item.order_detail}">
+	        		<p:column headerText="Nombre Producto: ">
+	        			<h:outputText value="#{item2.getProduct().getName()}"></h:outputText>
+	        		</p:column>
+	        		
+	        		<p:column headerText="Id del Producto: ">
+	        			<h:outputText value="#{item2.getProduct().getProduct_id()}"></h:outputText>
+	        		</p:column>
+	        		
+	        		<p:column headerText="Descripcion del Producto">
+	        			<h:outputText value="#{item2.getProduct().getProduct_description()}"></h:outputText>
+	        		</p:column>
+	        		
+	        	</p:subTable>	        	
+	        </p:column>  
+	 
+    </p:dataTable>
+	
+	</h:form>
+
+</h:body>
+</html>

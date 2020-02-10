@@ -1,0 +1,112 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	>
+<style type="text/css">
+
+#center{
+	width: 800px;
+	background-color: aqua;
+	margin: 0 auto;
+	display: table;
+	border: dashed 1px;
+}
+
+</style>
+
+
+
+<h:form>
+
+<div id="top">
+
+</div>
+
+<div id="right">
+
+</div>
+
+<div id="center">
+<p:tab>
+	
+	<p:dataTable		
+		id="datalist" 
+		value="#{customerController.lstSelected}"		
+		var="item"	
+		rowKey="#{item}" 
+                                    
+        rowsPerPageTemplate="5,10,15"
+        paginatorPosition="bottom"
+        rows="10"        
+        selectionMode="single"
+        selection="#{customerController}"
+        widgetVar="CargaCustomerTable"
+        >
+        
+	        <p:column headerText="Id Cliente" style="width:30%">
+	            <h:outputText value="#{item.customer_id}"  />
+	        </p:column>
+	 
+	        <p:column headerText="Nombre" style="width:30%">
+	            <h:outputText value="#{item.name}" />
+	        </p:column>
+	 
+	        <p:column headerText="Email" style="width:30%">
+	            <h:outputText value="#{item.email}" />
+	        </p:column> 
+	 
+    </p:dataTable>
+
+</p:tab>	
+
+
+<p:tab>
+	
+	<p:dataTable		
+		id="datalist2" 
+		value="#{customerController.customerProducts}"		
+		var="item"	
+		rowKey="#{item}"                                    
+        rowsPerPageTemplate="5,10,15"
+        paginatorPosition="bottom"
+        rows="10"               
+        widgetVar="CargaProductsTable"
+        >
+        
+	        <p:column headerText="Id Cliente" style="width:30%">
+	            <h:outputText value="#{item.custumer.customer_id}"  />
+	        </p:column>
+	 
+	        <p:subTable var="item2" value="#{item.products}">
+	        	<p:column headerText="Id Producto">
+					<h:outputText value="#{item2.product_id}"></h:outputText>
+	        	</p:column>
+	        	
+	        	<p:column headerText="Id Producto">
+					<h:outputText value="#{item2.name}"></h:outputText>
+	        	</p:column>
+	        	
+	        	<p:column headerText="Descripcion">
+					<h:outputText value="#{item2.product_description}"></h:outputText>
+	        	</p:column>
+	        	
+	        	<p:column headerText="Precio">
+					<h:outputText value="#{item2.price}"></h:outputText>
+	        	</p:column>
+	        	
+	        </p:subTable>
+	 
+    </p:dataTable>
+
+</p:tab>
+
+
+</div>
+
+</h:form>
+</html>
